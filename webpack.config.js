@@ -1,6 +1,8 @@
 const path = require('path');
 // 插件都是一个类，所以我们命名的时候尽量用大写开头
 let HtmlWebpackPlugin = require('html-webpack-plugin');
+// 拆分css样式的插件
+let ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   // 入口文件
@@ -11,7 +13,34 @@ module.exports = {
     path: path.resolve('dist')  // 打包后的目录，必须是绝对路径
   },
   // 处理对应模块
-  module: {},
+  module: {
+    rules: [
+      {
+        test: /\.less$/,     // 解析less
+        use: ExtractTextWebpackPlugin.extract({
+          // 将css用link的方式引入就不再需要style-loader了
+          fallback: "style-loader",
+          use: ['css-loader', 'less-loader'] // 从右向左解析
+        })
+      },
+      {
+        test: /\.scss$/,     // 解析scss
+        use: ExtractTextWebpackPlugin.extract({
+          // 将css用link的方式引入就不再需要style-loader了
+          fallback: "style-loader",
+          use: ['css-loader', 'sass-loader'] // 从右向左解析
+        })
+      },
+      {
+        test: /\.css$/,     // 解析css
+        use: ExtractTextWebpackPlugin.extract({
+          // 将css用link的方式引入就不再需要style-loader了
+          fallback: "style-loader",
+          use: ['css-loader']
+        })
+      }
+    ]
+  },
   // 对应的插件
   plugins: [
     // 通过new一下这个类来使用插件
@@ -20,7 +49,9 @@ module.exports = {
       // 在src目录下创建一个index.html页面当做模板来用
       template: './public/index.html',
       hash: true, // 会在打包好的bundle.js后面加上hash串
-    })
+    }),
+    // 拆分后会把css文件放到dist目录下的css/style.css
+    new ExtractTextWebpackPlugin('css/style.css')
   ],
   // 开发服务器配置
   devServer: {},
