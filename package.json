@@ -4,7 +4,8 @@
   "description": "react+webpack4+react全家桶的脚手架项目",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server",
+    "build": "webpack"
   },
   "keywords": [
     "react",
@@ -15,7 +16,9 @@
   "author": "Myron",
   "license": "MIT",
   "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.40.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }
