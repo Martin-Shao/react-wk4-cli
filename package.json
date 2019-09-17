@@ -13,5 +13,9 @@
     "react-router-dom"
   ],
   "author": "Myron",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
+  }
 }

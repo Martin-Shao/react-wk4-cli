@@ -7,5 +7,5 @@ mkdir react-wk4-cli && cd react-wk4-cli
 
 npm init -y
 
-
+npm i webpack webpack-cli -D
 ```
