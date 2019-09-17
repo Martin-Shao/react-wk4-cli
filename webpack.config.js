@@ -20,7 +20,7 @@ module.exports = {
         use: ExtractTextWebpackPlugin.extract({
           // 将css用link的方式引入就不再需要style-loader了
           fallback: "style-loader",
-          use: ['css-loader', 'less-loader'] // 从右向左解析
+          use: ['css-loader', 'postcss-loader', 'less-loader'] // 从右向左解析
         })
       },
       {
@@ -28,7 +28,7 @@ module.exports = {
         use: ExtractTextWebpackPlugin.extract({
           // 将css用link的方式引入就不再需要style-loader了
           fallback: "style-loader",
-          use: ['css-loader', 'sass-loader'] // 从右向左解析
+          use: ['css-loader', 'postcss-loader', 'sass-loader'] // 从右向左解析
         })
       },
       {
@@ -36,8 +36,28 @@ module.exports = {
         use: ExtractTextWebpackPlugin.extract({
           // 将css用link的方式引入就不再需要style-loader了
           fallback: "style-loader",
-          use: ['css-loader']
+          use: ['css-loader', 'postcss-loader']
         })
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,    // 小于8k的图片自动转成base64格式，并且不会存在实体图片
+              outputPath: 'images/'   // 图片打包后存放的目录
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(htm|html)$/,
+        use: 'html-withimg-loader'
+      },
+      {
+        test: /\.(eot|ttf|woff|svg)$/,
+        use: 'file-loader'
       }
     ]
   },
@@ -55,6 +75,17 @@ module.exports = {
   ],
   // 开发服务器配置
   devServer: {},
+  resolve: {
+    // 别名
+    alias: {
+      Pages: path.join(__dirname, 'src/pages'),
+      Component: path.join(__dirname, 'src/component'),
+      Actions: path.join(__dirname, 'src/redux/actions'),
+      Reducers: path.join(__dirname, 'src/redux/reducers'),
+    },
+    // 省略后缀
+    extensions: ['.js', '.jsx', '.json', '.css', '.scss', '.less']
+  },
   // 模式配置
   mode: 'development'
 }
