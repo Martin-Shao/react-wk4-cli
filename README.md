@@ -80,3 +80,9 @@ module.exports = {
     ]
 }
 ```
+
+## 参考文章
+
+* [用webpack4从零开始构建react脚手架][1]
+
+[1]: https://www.jianshu.com/p/91a4214b913b
